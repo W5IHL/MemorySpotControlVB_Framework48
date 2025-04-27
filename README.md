@@ -1,6 +1,6 @@
 # MemorySpotControlVB_Framework48
 
-**Version:** 1.2
+**Version:** 1.2 **
 
 Developed by **Rik (W5IHL)** with assistance from **Mac\*** (AI Assistant)
 Thanks Richie (MW0LGE) for bringing the TCI protocol to life on Thetis.
