@@ -133,10 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="MemorySpotIcon.ico" />
-    <Content Include="MSM.ico" />
     <Content Include="MSM48.ico" />
-    <Content Include="MSM_64x64.ico" />
     <None Include="Resources\MSM48.ico" />
   </ItemGroup>
   <ItemGroup>

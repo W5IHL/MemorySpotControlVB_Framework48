@@ -1,4 +1,12 @@
-﻿Imports System
+﻿' Memory Spot Control for Thetis
+' Sends spots to panadapter from memory.xml via TCI
+' 2025/4
+' Rik Herdell (W5IHL) & Mac*
+' Thank you Richie (MW0LGE) for implementing TCI in Thetis
+'
+'
+'
+Imports System
 Imports System.Collections.Generic
 Imports System.Windows.Forms
 Imports System.IO
