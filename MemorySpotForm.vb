@@ -138,7 +138,8 @@ Public Class MemorySpotForm
 
             For Each spot In spots
                 Dim freqHz As Long = CLng(Double.Parse(spot.Frequency) * 1000000)
-                Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (Spotter W5IHL);"
+                '    Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (Spotter W5IHL);"
+                Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
                 ws.Send(spotMessage)
             Next
 
