@@ -72,10 +72,10 @@ Partial Class MemorySpotForm
         '
         Me.colorPicker.FormattingEnabled = True
         Me.colorPicker.Items.AddRange(New Object() {"Red", "Green", "Blue", "Yellow", "Orange", "Cyan", "Magenta", "White", "Black"})
-        Me.colorPicker.Location = New System.Drawing.Point(14, 102)
+        Me.colorPicker.Location = New System.Drawing.Point(34, 103)
         Me.colorPicker.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.colorPicker.Name = "colorPicker"
-        Me.colorPicker.Size = New System.Drawing.Size(140, 21)
+        Me.colorPicker.Size = New System.Drawing.Size(78, 21)
         Me.colorPicker.TabIndex = 3
         '
         'lblVersion
@@ -126,7 +126,7 @@ Partial Class MemorySpotForm
         '
         'btnSaveSettings
         '
-        Me.btnSaveSettings.Location = New System.Drawing.Point(226, 129)
+        Me.btnSaveSettings.Location = New System.Drawing.Point(226, 118)
         Me.btnSaveSettings.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.btnSaveSettings.Name = "btnSaveSettings"
         Me.btnSaveSettings.Size = New System.Drawing.Size(88, 23)
@@ -144,6 +144,7 @@ Partial Class MemorySpotForm
         Me.lblConnectionStatus.Size = New System.Drawing.Size(136, 13)
         Me.lblConnectionStatus.TabIndex = 10
         Me.lblConnectionStatus.Text = "Status: Not Connected"
+        Me.lblConnectionStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtLog
         '

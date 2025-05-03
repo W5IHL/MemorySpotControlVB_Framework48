@@ -124,6 +124,9 @@ Public Class MemorySpotForm
     End Sub
 
     ' 🔥 Send All Spots
+    '   SPOT:arg1,arg2,arg3,arg4,arg5; 
+    '   arg1 - callsign, arg2 - mode type, arg3 - frequency, Hz, arg4 - ARGB color, arg5 - additional text 
+    '
     Private Sub SendAllSpots()
         If ws.State = WebSocket4Net.WebSocketState.Open Then
             Dim spots = ParseMemoryXml()
@@ -139,7 +142,12 @@ Public Class MemorySpotForm
             For Each spot In spots
                 Dim freqHz As Long = CLng(Double.Parse(spot.Frequency) * 1000000)
                 '    Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (Spotter W5IHL);"
-                Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
+                '    Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
+
+                Dim spotMessage = $"SPOT:{spot.Name},{spot.Mode}-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
+                LogMessage($"Parsed spot: {spot.Name}, {spot.Frequency} MHz, Mode: {spot.Mode}")
+
+
                 ws.Send(spotMessage)
             Next
 
@@ -159,8 +167,11 @@ Public Class MemorySpotForm
             End If
 
             For Each spot In sentSpots
-                Dim freqHz As Long = CLng(Double.Parse(spot.Frequency) * 1000000)
-                Dim clearMessage = $"SPOT:{spot.Name},CWU-swl[1],{freqHz},1,;"
+                '          Dim freqHz As Long = CLng(Double.Parse(spot.Frequency) * 1000000)
+                '          Dim clearMessage = $"SPOT:{spot.Name},CWU-swl[1],{freqHz},1,;"
+
+                Dim clearMessage = $"SPOT_DELETE:{spot.Name};"
+
                 ws.Send(clearMessage)
             Next
 
@@ -189,9 +200,14 @@ Public Class MemorySpotForm
             For Each node As XmlNode In doc.SelectNodes("//MemoryRecord")
                 Dim freq = node.SelectSingleNode("RXFreq")?.InnerText
                 Dim name = node.SelectSingleNode("Name")?.InnerText
+                Dim mode = node.SelectSingleNode("DSPMode")?.InnerText
 
                 If Not String.IsNullOrEmpty(freq) AndAlso Not String.IsNullOrEmpty(name) Then
-                    records.Add(New MemoryRecord With {.Frequency = freq, .Name = name})
+                    records.Add(New MemoryRecord With {
+                        .Frequency = freq,
+                        .Name = name,
+                        .Mode = If(String.IsNullOrEmpty(mode), "CWU", mode)   ' default to CWU if missing
+                    })
                 End If
             Next
 
@@ -226,6 +242,7 @@ Public Class MemorySpotForm
     Private Class MemoryRecord
         Public Property Frequency As String
         Public Property Name As String
+        Public Property Mode As String
     End Class
 
 End Class
