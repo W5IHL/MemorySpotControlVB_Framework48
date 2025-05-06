@@ -77,6 +77,30 @@ Namespace My
                 Me("TciPort") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property WindowLeft() As Integer
+            Get
+                Return CType(Me("WindowLeft"),Integer)
+            End Get
+            Set
+                Me("WindowLeft") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property WindowTop() As Integer
+            Get
+                Return CType(Me("WindowTop"),Integer)
+            End Get
+            Set
+                Me("WindowTop") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
