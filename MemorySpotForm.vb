@@ -37,19 +37,30 @@ Public Class MemorySpotForm
 
     ' ▶️ On Form Load
     Private Sub MemorySpotForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim version As String = "v1.3"
+        Dim version As String = "v1.4.0"
         Me.Text = "Memory Spot Control " & version
 
+        Dim savedPosition As New Point(My.Settings.WindowLeft, My.Settings.WindowTop)
 
+        ' Restore position only if it's on a valid screen
+        If IsPointOnAnyScreen(savedPosition) Then
+            Me.Location = savedPosition
+        Else
+            ' Optional: fallback to center screen
+            Me.StartPosition = FormStartPosition.CenterScreen
+        End If
+
+        ' ... your existing startup logic continues
         txtIpAddress.Text = My.Settings.TciIpAddress
         txtPort.Text = My.Settings.TciPort
-
         colorPicker.Items.Clear()
         colorPicker.Items.AddRange(thetisColorMap.Keys.ToArray())
         colorPicker.SelectedIndex = 0
 
         ReconnectWebSocket()
     End Sub
+
+
 
     ' 🔌 Reconnect WebSocket
     Private Sub ReconnectWebSocket()
@@ -144,7 +155,8 @@ Public Class MemorySpotForm
                 '    Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (Spotter W5IHL);"
                 '    Dim spotMessage = $"SPOT:{spot.Name},CWU-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
 
-                Dim spotMessage = $"SPOT:{spot.Name},{spot.Mode}-swl[0],{freqHz},{thetisColor},{spot.Name} (M.I.);"
+                Dim spotMessage = $"SPOT:{spot.Name},{spot.Mode},{freqHz},{thetisColor},{spot.Name} (M.I.);"
+
                 LogMessage($"Parsed spot: {spot.Name}, {spot.Frequency} MHz, Mode: {spot.Mode}")
 
 
@@ -237,6 +249,15 @@ Public Class MemorySpotForm
             lblConnectionStatus.ForeColor = color
         End If
     End Sub
+
+    Private Sub MemorySpotForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        My.Settings.WindowLeft = Me.Left
+        My.Settings.WindowTop = Me.Top
+        My.Settings.Save()
+    End Sub
+
+
+
 
     ' 📄 Memory Record class
     Private Class MemoryRecord

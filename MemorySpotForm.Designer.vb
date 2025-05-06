@@ -5,6 +5,17 @@ Imports System.Drawing
 Partial Class MemorySpotForm
     Inherits System.Windows.Forms.Form
 
+
+    Public Sub New()
+        ' Ensure the window position is fully under your control
+        Me.StartPosition = FormStartPosition.Manual
+
+        ' Required for Windows Forms designer support
+        InitializeComponent()
+    End Sub
+
+
+
     ' Dispose to clean up components
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -16,6 +27,19 @@ Partial Class MemorySpotForm
             MyBase.Dispose(disposing)
         End Try
     End Sub
+
+
+    Private Function IsPointOnAnyScreen(p As Point) As Boolean
+        For Each screen As Screen In Screen.AllScreens
+            If screen.WorkingArea.Contains(p) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+
+
 
     ' Required by Windows Form Designer
     Private components As System.ComponentModel.IContainer
